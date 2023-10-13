@@ -1,44 +1,32 @@
-CODE = {
-  '.-' => 'A', '-...' => 'B', '-.-.' => 'C', '-..' => 'D', '.' => 'E',
-  '..-.' => 'F', '--.' => 'G', '....' => 'H', '..' => 'I', '.---' => 'J',
-  '-.-' => 'K', '.-..' => 'L', '--' => 'M', '-.' => 'N', '---' => 'O',
-  '.--.' => 'P', '--.-' => 'Q', '.-.' => 'R', '...' => 'S', '-' => 'T', '..-' => 'U',
-  '...-' => 'V', '.--' => 'W', '-..-' => 'X', '-.--' => 'Y', '--..' => 'Z',
-  '.----' => 1, '..---' => 2, '...--' => 3, '....-' => 4, '.....' => 5,
-  '-....' => 6, '--...' => 7, '---..' => 8, '----.' => 9, '-----' => 0
-}.freeze
-
-def decode_char(char)
-  CODE[char]
+def decode_message(morse_message)
+  morse_words = morse_message.split('   ') # Split message into words (3 spaces)
+  decoded_words = morse_words.map { |morse_word| decode_word(morse_word) }
+  decoded_words.join(' ') # Join decoded words with a single space
 end
 
-# result = decode_char("--")
-# puts result
+# Method to decode a Morse code character
+def decode_char(morse_code)
+  morse_code_dict = {
+    '.-' => 'A', '-...' => 'B', '-.-.' => 'C', '-..' => 'D', '.' => 'E',
+    '..-.' => 'F', '--.' => 'G', '....' => 'H', '..' => 'I', '.---' => 'J',
+    '-.-' => 'K', '.-..' => 'L', '--' => 'M', '-.' => 'N', '---' => 'O',
+    '.--.' => 'P', '--.-' => 'Q', '.-.' => 'R', '...' => 'S', '-' => 'T',
+    '..-' => 'U', '...-' => 'V', '.--' => 'W', '-..-' => 'X', '-.--' => 'Y',
+    '--..' => 'Z'
+  }
 
-def decode_word(word)
-  chars = word.split
-  char_decode = ''
-
-  chars.each do |char|
-    char_decode += decode_char(char)
-  end
-
-  char_decode
+  morse_code_dict[morse_code]
 end
 
-# result = decode_word("-- -.--")
-# puts result
-
-def decode(sentence)
-  words = sentence.split('   ')
-  word_decode = ''
-
-  words.each do |word|
-    word_decode += "#{decode_word(word)} "
-  end
-
-  word_decode
+# Method to decode an entire word in Morse code
+def decode_word(morse_word)
+  morse_word.split.map { |morse_char| decode_char(morse_char) }.join
 end
 
-result = decode('.-   -... --- -..-   ..-. ..- .-.. .-..   --- ..-.   .-. ..- -... .. . ...')
-puts result
+# Example usage:
+morse_message2 = '-- .. -.-. .-. --- ...- . .-. ... . .-.. --- ...- . .-.'
+morse_message = '.-   -... --- -..-   ..-. ..- .-.. .-..   --- ..-.   .-. ..- -... .. . ...'
+decoded_message = decode_message(morse_message)
+decoded_message2 = decode_message(morse_message2)
+puts decoded_message # Output should be "A BOX FULL OF RUBIES"
+puts decoded_message2
