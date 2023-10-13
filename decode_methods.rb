@@ -1,39 +1,44 @@
-def morse_to_letter(message)
-  morse_code = {
-    '.-' => 'A', '-...' => 'B', '-.-.' => 'C', '-..' => 'D', '.' => 'E',
-    '..-.' => 'F', '--.' => 'G', '....' => 'H', '..' => 'I', '.---' => 'J',
-    '-.-' => 'K', '.-..' => 'L', '--' => 'M', '-.' => 'N', '---' => 'O',
-    '.--.' => 'P', '--.-' => 'Q', '.-.' => 'R', '...' => 'S', '-' => 'T',
-    '..-' => 'U', '...-' => 'V', '.--' => 'W', '-..-' => 'X', '-.--' => 'Y',
-    '--..' => 'Z', '-----' => '0', '.----' => '1', '..---' => '2', '...--' => '3',
-    '....-' => '4', '.....' => '5', '-....' => '6', '--...' => '7', '---..' => '8',
-    '----.' => '9'
-  }
-  morse_code[message]
+CODE = {
+  ".-" => "A","-..." => "B","-.-." => "C","-.." => "D","." => "E",
+  "..-." => "F","--." => "G","...." => "H",".." => "I",".---" => "J",
+  "-.-" => "K",".-.." => "L","--" => "M","-." => "N","---" => "O",
+  ".--." => "P","--.-" => "Q",".-." => "R","..." => "S","-" => "T","..-" => "U",
+  "...-" => "V",".--" => "W","-..-" => "X","-.--" => "Y","--.." => "Z",
+  ".----" => 1,"..---" => 2,"...--" => 3,"....-" => 4,"....." => 5,
+  "-...." => 6,"--..." => 7,"---.." => 8,"----." => 9,"-----" => 0
+}
+
+def decode_char(char)
+  return CODE[char];
 end
 
-def morse_to_word(message)
-  word = ''
-  message.split.each do |v|
-    letter = morse_to_letter(v)
-    word += letter if letter
+# result = decode_char("--")
+# puts result
+
+def decode_word(word)
+  chars = word.split(" ")
+  char_decode = ''
+
+  chars.each do |char|
+    char_decode += decode_char(char)
   end
-  word
+
+  return char_decode
 end
 
-def decode_morse_message(message)
-  message_decoded = ''
-  arr = message.split('   ')
-  length = arr.length
-  arr.each_with_index do |v, i|
-    word = morse_to_word(v)
-    next unless word
+# result = decode_word("-- -.--")
+# puts result
 
-    message_decoded += if i < length - 1
-                         "#{word} "
-                       else
-                         word
-                       end
+def decode(sentence)
+  words = sentence.split("   ")
+  word_decode = ''
+
+  words.each do |word|
+    word_decode += "#{decode_word(word)} "
   end
-  message_decoded
+
+  return word_decode
 end
+
+result = decode(".-   -... --- -..-   ..-. ..- .-.. .-..   --- ..-.   .-. ..- -... .. . ...")
+puts result
