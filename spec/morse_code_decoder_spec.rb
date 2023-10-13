@@ -1,4 +1,4 @@
-require_relative '../decode_method.'
+require_relative '../decode_method'
 
 describe 'Morse code decoder' do
   it 'decodes a Morse code character correctly' do
